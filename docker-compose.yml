@@ -14,11 +14,13 @@ services:
     image: vaultwarden/server:latest-alpine
     restart: always
     container_name: bitwarden
-    depends_on:
-      - proxy
+    # depends_on:
+    #   - proxy
     <<: *default-logging
     volumes:
       - ${PWD}/bitwarden:/data
+    ports:
+      - 80:80
     environment:
       - LOG_FILE=/data/bitwarden.log
       - SHOW_PASSWORD_HINT=false
