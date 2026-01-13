@@ -18,7 +18,7 @@ services:
     #   - proxy
     <<: *default-logging
     volumes:
-      - ${PWD}/bitwarden:/data
+      - /mnt/data/bitwarden:/data
     ports:
       - 80:80
     environment:
@@ -54,9 +54,9 @@ services:
     <<: *default-logging
     volumes:
       - ${PWD}/.env:/.env:ro
-      - ${PWD}/bitwarden:/data
-      - ${PWD}/bitwarden/rclone:/data/rclone
-      - ${PWD}/bitwarden/backups:/data/backups
+      - /mnt/data/bitwarden:/data
+      - /mnt/data/bitwarden/rclone:/data/rclone
+      - /mnt/data/bitwarden/backups:/data/backups
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - BACKUP # Value-less variables are set in .env
@@ -149,8 +149,8 @@ services:
     depends_on:
       - bitwarden
     volumes:
-      - ${PWD}/fail2ban:/data
-      - ${PWD}/bitwarden:/bitwarden:ro
+      - /mnt/data/fail2ban:/data
+      - /mnt/data/bitwarden:/bitwarden:ro
       - /var/log:/var/log:ro
       - /run/systemd/journal:/run/systemd/journal:ro
     network_mode: "host"
