@@ -18,7 +18,7 @@ services:
     #   - proxy
     <<: *default-logging
     volumes:
-      - /mnt/data/bitwarden:/data
+      - bitwarden_data:/data
     ports:
       - 80:80
     environment:
@@ -54,9 +54,7 @@ services:
     <<: *default-logging
     volumes:
       - ${PWD}/.env:/.env:ro
-      - /mnt/data/bitwarden:/data
-      - /mnt/data/bitwarden/rclone:/data/rclone
-      - /mnt/data/bitwarden/backups:/data/backups
+      - bitwarden_data:/data
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - BACKUP # Value-less variables are set in .env
@@ -149,8 +147,8 @@ services:
     depends_on:
       - bitwarden
     volumes:
-      - /mnt/data/fail2ban:/data
-      - /mnt/data/bitwarden:/bitwarden:ro
+      - fail2ban_data:/data
+      - bitwarden_data:/bitwarden:ro
       - /var/log:/var/log:ro
       - /run/systemd/journal:/run/systemd/journal:ro
     network_mode: "host"
@@ -202,4 +200,8 @@ services:
   #     - TZ
 
 volumes:
+  bitwarden_data:
+    # Volumen compartido entre bitwarden, backup y fail2ban
+  fail2ban_data:
+    # Volumen para datos de fail2ban
   caddycerts:
